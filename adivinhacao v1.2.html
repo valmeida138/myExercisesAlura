@@ -1,0 +1,62 @@
+<meta charset="UTF-8">
+
+<script>
+
+var pulaLinha = function(){
+	document.write("<br>");
+};
+var mostra =  function(frase){
+	document.write(frase);
+	pulaLinha();
+	pulaLinha();
+};
+
+alert("Estou pensando em um número de 0 a 100! Será que você conegue adivinhar? Você tem 6 chances!");
+
+var numPensado = Math.round(Math.random() *100);
+
+var numMenor = -1
+var numMaior = 101
+var numPossib = 101
+
+//Quero calcular a probabilidade de acertar, para cada nova tentativa. Sem repedição e obedecendo as dicas.
+
+var i=1
+
+var numChut = parseInt(prompt("Que número estou pensando?"));
+
+while ((numChut != numPensado)&&i<6){
+	
+	if(numChut > numPensado){
+		alert("Não, não é " + numChut + ". Dica: É um número menor!");
+		if(numChut < numMaior){
+			numMaior = numChut
+		};
+	}
+	else{
+		alert("Não, não é " + numChut + ". Dica: É um número maior!");
+		if(numChut > numMenor){
+			numMenor = numChut
+		};
+	};
+	
+	numPossib = (numMaior - 1) - numMenor
+	var chance = Math.round((1/numPossib)*100 );	
+	// var chance = Math.round (1-[(numPossib/101)]*100) -> Matematicamente incorreto.
+	
+	alert("Restam " + (6-i) + " tentativas! Tente agora um número de " + (numMenor+1) + " a " + (numMaior-1) + ". Atenção: Seguindo as dicas e não repitindo números, você terá " + chance + "% de chance de acertar!");
+	i++
+	var numChut = parseInt(prompt("Que número estou pensando?"));
+
+};
+
+if(numChut == numPensado){
+	mostra("Nossa, você acertou! Na " + i + "º tentativa.  Eu tinha pensado em " + numPensado + "!");
+}
+else{
+	mostra("Você perdeu! Eu tinha pensado em " + numPensado + "!");
+};
+mostra("Aperte a tecla F5 para jogar novamente!")
+
+//coded by: <Vinicius Almeida>
+</script>

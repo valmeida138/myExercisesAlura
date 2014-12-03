@@ -1,0 +1,128 @@
+<meta charset="UTF-8">
+
+<input type="submit" value="Iniciar jogo!" id="iniciar"/>
+
+<script>
+
+var sorteados = []
+var chutados = []
+
+var sortearNum = function(){
+	console.log("sorteando os numeros")
+	sorteados = []
+	for(var i = 1; i < 6; i++){
+		console.log("for 1");
+		var numSorteado = Math.round( Math.random()*60 );
+		if(sorteados.length == 0){
+			console.log("if 1");
+			sorteados.push(numSorteado);
+		}else{
+			console.log("else 1");
+			var jaAdd = false
+			for(var i=0; i < sorteados.length; i++){
+				console.log("for 2");
+				if(sorteados[i] == numSorteado){
+					console.log("if 2");
+					i--
+					jaAdd= true
+					break;
+				};
+			};
+			if(jaAdd == false){
+				console.log("if 3");
+				sorteados.push(numSorteado);
+			};
+		};
+	};
+	console.log(sorteados)
+	console.log("fim da função")
+	return sorteados
+};
+
+var adicionarNum = function(){
+	console.log("adicionando os numeros");
+	chutados = []
+	for(var i = 0; i < 6; i++){
+		console.log("for 1")
+		var numChutado = parseInt( prompt("Qual numero você deseja adionar? Restam " + (6-i) + "!") );
+		console.log(numChutado)
+		while( numChutado < 0 || numChutado > 60 || (numChutado+'') == "NaN" ){
+			console.log("while 1")
+			numChutado = parseInt( prompt("O número que você digitou não entá no intervado de 0 a 60! Tente novamente!") );
+		};
+		if(chutados.length == 0){
+			console.log("if 1")
+			chutados.push(numChutado)
+		}else{
+			console.log("else 1")
+			var jaAdd = false
+			
+			serchingRepetition:{
+			for(var i2 = 0; i2 < chutados.length; i2++){
+				console.log("for 2");
+				if(chutados[i2] == numChutado){
+					console.log("if 2");
+					jaAdd = true
+					break serchingRepetition;
+				};
+			};};
+			if(jaAdd == true){
+				i--
+				alert("O " + numChutado + " já foi adicionado. Tente outro!")
+			}else{
+				console.log("if 3")
+				chutados.push(numChutado);
+			};
+		};
+		if(i > 4 ){
+			alert("Os números adicionados foram: " + chutados + ".");
+		};
+		//console.log(chutados)
+	};
+	console.log(chutados);
+	console.log("fim da função");
+	return chutados;
+};
+
+var comparar = function(sorteados,chutados){
+	console.log("comparando dados")
+	var acertos = 0
+	for(var i = 0; i < chutados.length; i++){
+		console.log("for 1")
+		for(i2 = 0; i2 < sorteados.length; i2++){
+			console.log("for 2")
+			if( chutados[i] == sorteados [i2] ){
+				console.log("if 1")
+				acertos++
+			};
+		};
+	};
+	console.log("fim da função")
+	return acertos;
+};
+
+var jogar = function(){
+	if( confirm("Para jogar na mega sena, você precisa enviar os 6 números (de 0 a 60) do seu jogo. Esses valores serão comparados com mais seis sorteados pelo computador, dando, no final, o seu número de acertos. Vamos lá?") ){
+		var chance = (6/60)*(5/59)*(4/58)*(3/57)*(2/56)*(1/55)* 100;
+		alert("Você é ambioso? Quer acertar todos os 6 númmeros? Sua chance é de " + chance + "%. Boa sorte!" )
+		var acertos = comparar( sortearNum(),adicionarNum() );
+		if(acertos >= 3){
+			if(acertos < 6){
+				alert("Quantos? " + acertos + "? Nossa! Você é muito bom(a) nisso! Jogue novamente! Vamos em rumo aos seis!");
+			}else{
+				alert("Quanto " + acertos + "? Nossa!!! Você é algum semideus???")
+			};	
+		}else{
+			if(acertos > 0){
+				alert("Parabéns! Você acertou " + acertos + " números!");
+			}else{alert("Que pena, você não acertou nenhum número! Jogue novamente!")};
+		};
+	}else{alert("Ok! Quando quiser jogar, clique no botão iniciar!")
+	};
+	// suas chances de acertar são: Math.round( (6/60)*(5/59)*(4/58)*(3/57)*(2/56)*(1/55) )
+};
+
+var botaoIniciar = document.getElementById("iniciar");
+botaoIniciar.onclick = jogar;
+//coded by: Vinícius Almeida
+</script>
